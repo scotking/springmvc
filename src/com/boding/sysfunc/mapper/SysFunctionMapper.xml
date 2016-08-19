@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.boding.sysfunc.mapper.SysFunctionMapper" >
+  <resultMap id="BaseResultMap" type="com.boding.sysfunc.mapper.domain.SysFunction" >
+    <id column="FUNC_ID" property="funcId" jdbcType="CHAR" />
+    <result column="FUNC_NAME" property="funcName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="CHAR" />
+    <result column="URL" property="url" jdbcType="VARCHAR" />
+    <result column="FUNC_CODE" property="funcCode" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FUNC_ID, FUNC_NAME, PARENT_ID, URL, FUNC_CODE, TYPE, STATUS
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.boding.sysfunc.mapper.domain.SysFunctionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_function
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_function
+    where FUNC_ID = #{funcId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_function
+    where FUNC_ID = #{funcId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.boding.sysfunc.mapper.domain.SysFunctionExample" >
+    delete from sys_function
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.boding.sysfunc.mapper.domain.SysFunction" >
+    insert into sys_function (FUNC_ID, FUNC_NAME, PARENT_ID, 
+      URL, FUNC_CODE, TYPE, STATUS
+      )
+    values (#{funcId,jdbcType=CHAR}, #{funcName,jdbcType=VARCHAR}, #{parentId,jdbcType=CHAR}, 
+      #{url,jdbcType=VARCHAR}, #{funcCode,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, #{status,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.boding.sysfunc.mapper.domain.SysFunction" >
+    insert into sys_function
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        FUNC_ID,
+      </if>
+      <if test="funcName != null" >
+        FUNC_NAME,
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID,
+      </if>
+      <if test="url != null" >
+        URL,
+      </if>
+      <if test="funcCode != null" >
+        FUNC_CODE,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="funcId != null" >
+        #{funcId,jdbcType=CHAR},
+      </if>
+      <if test="funcName != null" >
+        #{funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="funcCode != null" >
+        #{funcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.boding.sysfunc.mapper.domain.SysFunctionExample" resultType="java.lang.Integer" >
+    select count(*) from sys_function
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sys_function
+    <set >
+      <if test="record.funcId != null" >
+        FUNC_ID = #{record.funcId,jdbcType=CHAR},
+      </if>
+      <if test="record.funcName != null" >
+        FUNC_NAME = #{record.funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        PARENT_ID = #{record.parentId,jdbcType=CHAR},
+      </if>
+      <if test="record.url != null" >
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.funcCode != null" >
+        FUNC_CODE = #{record.funcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        TYPE = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sys_function
+    set FUNC_ID = #{record.funcId,jdbcType=CHAR},
+      FUNC_NAME = #{record.funcName,jdbcType=VARCHAR},
+      PARENT_ID = #{record.parentId,jdbcType=CHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      FUNC_CODE = #{record.funcCode,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=CHAR},
+      STATUS = #{record.status,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.boding.sysfunc.mapper.domain.SysFunction" >
+    update sys_function
+    <set >
+      <if test="funcName != null" >
+        FUNC_NAME = #{funcName,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        PARENT_ID = #{parentId,jdbcType=CHAR},
+      </if>
+      <if test="url != null" >
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="funcCode != null" >
+        FUNC_CODE = #{funcCode,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where FUNC_ID = #{funcId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.boding.sysfunc.mapper.domain.SysFunction" >
+    update sys_function
+    set FUNC_NAME = #{funcName,jdbcType=VARCHAR},
+      PARENT_ID = #{parentId,jdbcType=CHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      FUNC_CODE = #{funcCode,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=CHAR},
+      STATUS = #{status,jdbcType=CHAR}
+    where FUNC_ID = #{funcId,jdbcType=CHAR}
+  </update>
+</mapper>
